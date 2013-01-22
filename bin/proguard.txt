@@ -1,0 +1,6 @@
+# view res/layout/main.xml #generated:8
+-keep class com.google.android.gms.maps.SupportMapFragment { <init>(...); }
+
+# view AndroidManifest.xml #generated:23
+-keep class com.javier.maps.MainActivity { <init>(...); }
+

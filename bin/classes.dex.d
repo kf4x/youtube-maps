@@ -1,0 +1,25 @@
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes.dex : \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R$attr.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R$id.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R$string.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R$styleable.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/BuildConfig.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1$1.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1$2.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$2.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$3.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest$permission.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$attr.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$drawable.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$id.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$layout.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$string.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$styleable.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/dexedLibs/classes-366003ff12bc4fc74e7421338127f24d.jar \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/dexedLibs/android-support-v4-8328ee86628aab51fb0f0d7cafbf1fc1.jar \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/dexedLibs/google-play-services-97c2f8fc321621211d4031f19b296055.jar \
