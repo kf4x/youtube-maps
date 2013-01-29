@@ -4,6 +4,6 @@
     android:versionCode="2012110"
     android:versionName="2.0.12 (543433-10)" >
 
-    <uses-sdk android:minSdkVersion="16"/>
+    <uses-sdk android:minSdkVersion="8"/>
 
 </manifest>

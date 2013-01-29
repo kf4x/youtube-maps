@@ -1,12 +1,13 @@
 package com.javier.maps;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -31,6 +32,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
         setContentView(R.layout.main);
         initMap();
         addTwittertoMap();
+        
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        String provider = lm.getBestProvider(new Criteria(), true);
+        
+        if (provider == null) {
+            onProviderDisabled(provider);
+        }
+        
         googlemap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             public void onMapLongClick(final LatLng latlng) {
@@ -79,7 +88,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     public void onProviderDisabled(String provider) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("GPS is disabled");
+        builder.setTitle("Phone is in airplane mode");
         builder.setCancelable(false);
         builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
 
