@@ -13,6 +13,9 @@
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest$permission.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MarkerDataSource.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MyMarker.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MySQLiteHelper.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$attr.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$drawable.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/R$id.class \

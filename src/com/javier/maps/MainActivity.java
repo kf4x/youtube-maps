@@ -4,26 +4,32 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
     Context context = this;
     GoogleMap googlemap;
+    private MarkerDataSource data = new MarkerDataSource(context);
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -32,7 +38,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         setContentView(R.layout.main);
         initMap();
         addTwittertoMap();
-        
+
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         String provider = lm.getBestProvider(new Criteria(), true);
         
@@ -59,7 +65,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
                                 .snippet(snippet.getText().toString())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                                 .position(latlng)
-                                );                    
+                                );    
+                        String s = String.valueOf(latlng.latitude) + " " + String.valueOf(latlng.longitude);
+                        try {
+                            data.open();
+                        } catch (Exception e) {
+                        }
+                        data.addMarker(new MyMarker(title.getText().toString(),snippet.getText().toString(), s));
+                        data.close();
                     }
                 });
                 
@@ -116,6 +129,22 @@ public class MainActivity extends FragmentActivity implements LocationListener
     }
 
     private void addTwittertoMap() {
+        try {        
+            data.open();
+        } catch (SQLException e) {
+        }
+        
+        List<MyMarker> markers = data.getMyMarkers();
+        if (markers.size() > 1) {
+            for (int i = 0; i < markers.size(); i++) {
+                googlemap.addMarker(new MarkerOptions()
+                        .title(markers.get(i).getTitle())
+                        .snippet(markers.get(i).getSnippet())
+                        .position(markers.get(i).getLatLng()));
+
+            }
+        }
+        data.close();
         LatLng pos = new LatLng(37.7769904, -122.4169725);
         MarkerOptions mm = new MarkerOptions();
         googlemap.addMarker(new MarkerOptions()
