@@ -15,20 +15,25 @@ public class MyMarker {
     private String title;
     private String snippet;
     private String position;
+    private LatLng poLatLng;
 
     public MyMarker() {
     }
 
-    public MyMarker(long id, String title, String snippet, String position) {
+    public MyMarker(long id, String title, String snippet, LatLng poLatLng) {
         this.id = id;
         this.title = title;
         this.snippet = snippet;
-        this.position = position;
+        this.poLatLng = poLatLng;
+        this.position = String.valueOf(poLatLng.latitude) + " " + String.valueOf(poLatLng.longitude);
+
     }
-    public MyMarker(String title, String snippet, String position){
+    public MyMarker(String title, String snippet, LatLng poLatLng){
         this.title = title;
         this.snippet = snippet;
-        this.position = position;        
+        this.poLatLng = poLatLng;
+        this.position = String.valueOf(poLatLng.latitude) + " " + String.valueOf(poLatLng.longitude);
+
     }
 
     
@@ -84,11 +89,21 @@ public class MyMarker {
     /**
      * @param position the position to set
      */
+    public void setPosition(LatLng poLatLng) {
+        this.poLatLng = poLatLng;
+        this.position = String.valueOf(poLatLng.latitude) + " " + String.valueOf(poLatLng.longitude);
+    }
+    
+    /**
+     * @param position needs to be Latitude</space/>Longitude
+     */
     public void setPosition(String position) {
         this.position = position;
-    }
-    public LatLng getLatLng (){
         String[] pos = position.split(" ");
-        return new LatLng(Double.valueOf(pos[0]), Double.valueOf(pos[1]));
+        this.poLatLng = new LatLng(Double.valueOf(pos[0]), Double.valueOf(pos[1]));
+    }
+    
+    public LatLng getLatLng (){
+        return poLatLng;
     }
 }

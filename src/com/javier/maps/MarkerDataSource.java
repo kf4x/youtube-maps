@@ -52,9 +52,9 @@ public class MarkerDataSource {
         allColumns, MySQLiteHelper.ID_COL + " = " + insertId, null,
         null, null, null);
             
-           cursor.moveToFirst();
-           MyMarker mm = cursorToMarker(cursor);
-           cursor.close();
+        cursor.moveToFirst();
+        MyMarker mm = cursorToMarker(cursor);
+        cursor.close();
            
 
     }
@@ -80,7 +80,6 @@ public class MarkerDataSource {
 
     private MyMarker cursorToMarker(Cursor cursor) {
         MyMarker mm = new MyMarker();
-//        mm.setId(cursor.getLong(0));
         mm.setTitle(cursor.getString(0));
         mm.setSnippet(cursor.getString(1));
         mm.setPosition(cursor.getString(2));

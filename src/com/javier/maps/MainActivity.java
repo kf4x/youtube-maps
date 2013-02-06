@@ -66,12 +66,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                                 .position(latlng)
                                 );    
-                        String s = String.valueOf(latlng.latitude) + " " + String.valueOf(latlng.longitude);
                         try {
                             data.open();
                         } catch (Exception e) {
                         }
-                        data.addMarker(new MyMarker(title.getText().toString(),snippet.getText().toString(), s));
+                        data.addMarker(new MyMarker(title.getText().toString(),snippet.getText().toString(), latlng));
                         data.close();
                     }
                 });
