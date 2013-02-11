@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -17,13 +18,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
     Context context = this;
     GoogleMap googlemap;
+    MarkerDataSource data;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -31,7 +35,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initMap();
-        addTwittertoMap();
+        //addTwittertoMap();
         
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         String provider = lm.getBestProvider(new Criteria(), true);
@@ -39,7 +43,37 @@ public class MainActivity extends FragmentActivity implements LocationListener
         if (provider == null) {
             onProviderDisabled(provider);
         }
+        data = new MarkerDataSource(context);
+        try {
+           data.open();
+           
+        } catch (Exception e) {
+            Log.i("hello", "hello");
+        }
         
+        List<MyMarkerObj> m = data.getMyMarkers();
+        for (int i = 0; i < m.size(); i++) {
+            String[] slatlng =  m.get(i).getPosition().split(" ");
+            LatLng lat = new LatLng(Double.valueOf(slatlng[0]), Double.valueOf(slatlng[1]));
+            googlemap.addMarker(new MarkerOptions()
+                    .title(m.get(i).getTitle())
+                    .snippet(m.get(i).getSnippet())
+                    .position(lat)
+                    );
+            
+        }
+        //data.addMarker(new MyMarkerObj("twitter", "twitter HQ", "37.7769904 -122.4169725"));
+        
+        //data.close();
+        
+
+        googlemap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+            public void onInfoWindowClick(Marker marker) {
+                marker.remove();
+                data.deleteMarker(new MyMarkerObj(marker.getTitle(), marker.getSnippet(), marker.getPosition().latitude + " " + marker.getPosition().longitude));
+            }
+        });
         googlemap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             public void onMapLongClick(final LatLng latlng) {
@@ -59,7 +93,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
                                 .snippet(snippet.getText().toString())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                                 .position(latlng)
-                                );                    
+                                );     
+                        String sll = latlng.latitude + " " + latlng.longitude;
+                        data.addMarker(new MyMarkerObj(title.getText().toString(), snippet.getText().toString(), sll));
                     }
                 });
                 
@@ -126,6 +162,25 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 );
         
     }
+
+    @Override
+    protected void onPause() {
+        data.close();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        try {
+           data.open();
+           
+        } catch (Exception e) {
+            Log.i("hello", "hello");
+        }
+        super.onResume();
+    }
+    
+    
 }
 
 //	37.7769904 -122.4169725 
