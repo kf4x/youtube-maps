@@ -5,11 +5,13 @@
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R$styleable.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/google/android/gms/R.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/BuildConfig.class \
-/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1$1.class \
-/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1$2.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/JSONParser.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$1.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$2$1.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$2$2.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$2.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$3.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$4.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest$permission.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest.class \
