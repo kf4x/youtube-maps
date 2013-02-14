@@ -13,6 +13,8 @@ int attr uiZoomGestures 0x7f01000b
 int attr useViewLifecycle 0x7f01000c
 int attr zOrderOnTop 0x7f01000d
 int drawable ic_launcher 0x7f020000
+int id clickBtn 0x7f040008
+int id etsearch 0x7f040009
 int id etsnippet 0x7f040006
 int id ettitle 0x7f040005
 int id mainlo 0x7f040004

@@ -8,13 +8,13 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -31,14 +31,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
-    Context context = this;
-    GoogleMap googlemap;
-    JSONParser jParser = new JSONParser();
-    JSONObject json;
-    JSONObject response;
-    JSONArray venues;
-    ArrayList<HashMap<String, String>> venueMap = new ArrayList<HashMap<String, String>>();
-
+    private Context context = this;
+    private GoogleMap googlemap;
     
     
     /** Called when the activity is first created. */
@@ -52,81 +46,28 @@ public class MainActivity extends FragmentActivity implements LocationListener
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         String provider = lm.getBestProvider(new Criteria(), true);
         
-        Location lastKnownLoc = lm.getLastKnownLocation(provider);
-        final Double dLat = lastKnownLoc.getLatitude();
-        final Double dLong = lastKnownLoc.getLongitude(); //"+ dLat +","+ dLong + "       
-        Toast.makeText(context,"youre at " + dLat + " " + dLong , Toast.LENGTH_LONG);     
+//        final Location lastKnownLoc = lm.getLastKnownLocation(provider);
+
         if (provider == null) {
             onProviderDisabled(provider);
         }
         
-        
-        new Thread(new Runnable() {
-            public void run() {
-                json = jParser.getJSONfromUrl("https://api.foursquare.com/v2/venues/search?ll="+ dLat +","+ dLong + "&query=club&oauth_token=QHWKC5NBUGVO2XSHGD5LVCKV5QXWK20GTAUSQHDG51PC32AA&v=20130212");
-                try {
-                    response = json.getJSONObject("response");
-                    venues = response.getJSONArray("venues");
-                    for (int i = 0; i < venues.length(); i++) {
-                        JSONObject v = venues.getJSONObject(i);
-                        
-                        String name = v.getString("name");
-                        
-                        JSONObject loc = v.getJSONObject("location");
-                        String lat = loc.getString("lat");
-                        String lng = loc.getString("lng");
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        
-                        map.put("name", name);
-                        map.put("lat", lat);
-                        map.put("lng", lng);
-                        
-                        venueMap.add(map);
-                                                
-                    }
-                } catch (JSONException ex) {
-                    Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+        ((Button) findViewById(R.id.clickBtn)).setOnClickListener(new View.OnClickListener() {
+             
+            public void onClick(View v) {
+//                Double dLat = lastKnownLoc.getLatitude();
+//                Double dLong = lastKnownLoc.getLongitude();                  
+//                String srch = ((EditText)findViewById(R.id.etsearch)).getText().toString();
+                if (googlemap.getMyLocation() != null) {
+                    new SearchFoursquare().execute(
+                        String.valueOf(googlemap.getMyLocation().getLatitude()),
+                        String.valueOf(googlemap.getMyLocation().getLongitude()),
+                        ((EditText)findViewById(R.id.etsearch)).getText().toString()                            
+                            );
                 }
-                addTwittertoMap();
-            }
-        }).start();
-        
-        
+                else{
 
-        
-        googlemap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-
-            public void onMapLongClick(final LatLng latlng) {
-                LayoutInflater li = LayoutInflater.from(context);
-                final View v = li.inflate(R.layout.alertlayout, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setView(v);
-                builder.setCancelable(false);
-                
-                builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText title = (EditText) v.findViewById(R.id.ettitle);
-                        EditText snippet = (EditText) v.findViewById(R.id.etsnippet);
-                        googlemap.addMarker(new MarkerOptions()
-                                .title(title.getText().toString())
-                                .snippet(snippet.getText().toString())
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                .position(latlng)
-                                );                    
-                    }
-                });
-                
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                
-                AlertDialog alert = builder.create();
-                alert.show();
-                
+                }
             }
         });
     }
@@ -162,6 +103,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         AlertDialog alert = builder.create();
         alert.show();
     }
+    
     private void initMap(){
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         googlemap = mf.getMap();
@@ -170,32 +112,77 @@ public class MainActivity extends FragmentActivity implements LocationListener
         googlemap.setMapType(GoogleMap.MAP_TYPE_NORMAL); 
     }
 
-    protected void addTwittertoMap() {
-//        LatLng pos = new LatLng(37.7769904, -122.4169725);
-//        MarkerOptions mm = new MarkerOptions();
-//        googlemap.addMarker(new MarkerOptions()
-//                .title("Twitter")
-//                .snippet("Twitter HQ")
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-//                .position(pos)
-//                );
-//      t
-        try {
-            for (int i = 0; i < 10; i++) {
+    protected void addToMap(ArrayList<HashMap<String, String>> venueMap) {
+        googlemap.clear();
+
+        LatLng pos = null;
+            for (int i = 0; i < venueMap.size(); i++) {
                 String lat = venueMap.get(i).get("lat");
                 String lng = venueMap.get(i).get("lng");
-
+                try {
+                    pos = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
+                } catch (Exception e) {
+                }
                 googlemap.addMarker(new MarkerOptions()
-                        .title(venueMap.get(i).get("title"))
-        //                .snippet("Twitter HQ")
+                        .title(venueMap.get(i).get("name").toString())
+                        .snippet(venueMap.get(i).get("here").toString())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                        .position(new LatLng(Double.valueOf(lat), Double.valueOf(lng)))
+                        .position(pos)
                         );
-            }            
-        } catch (Exception e) {
+            }
+    }
+
+        
+    
+    private class SearchFoursquare extends AsyncTask<String, Void, Void>{
+        private JSONObject json;
+        private JSONObject response;
+        private JSONArray venues;
+        private ArrayList<HashMap<String, String>> venueMap = new ArrayList<HashMap<String, String>>();
+        @Override
+        protected Void doInBackground(String... params) {
+            if (params[2].contains(" ")) {
+                params[2] = params[2].replace(" ", "+");
+            }
+            json = new JSONParser().getJSONfromUrl("https://api.foursquare.com/v2/venues/search?ll="+ params[0] +","+ params[1] + "&query='"+params[2]+"'&oauth_token=QHWKC5NBUGVO2XSHGD5LVCKV5QXWK20GTAUSQHDG51PC32AA&v=20130212");
+            try {
+                response = json.getJSONObject("response");
+                venues = response.getJSONArray("venues");
+                venueMap.clear();
+                for (int i = 0; i < venues.length(); i++) {
+                    JSONObject v = venues.getJSONObject(i);
+
+                    String name = v.getString("name");
+
+                    JSONObject loc = v.getJSONObject("location");
+                    String lat = loc.getString("lat");
+                    String lng = loc.getString("lng");
+
+                    JSONObject here = v.getJSONObject("hereNow");
+                    String count = here.getString("count");
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+
+                    map.put("name", name);
+                    map.put("lat", lat);
+                    map.put("lng", lng);
+                    map.put("here", count);
+
+                    venueMap.add(map);
+
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return null;
         }
 
-    
+        @Override
+        protected void onPostExecute(Void result) {
+            addToMap(venueMap);
+            super.onPostExecute(result);
+        }
+
     }
 }
 

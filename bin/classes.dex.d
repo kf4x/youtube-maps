@@ -12,6 +12,7 @@
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$2.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$3.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$4.class \
+/Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity$SearchFoursquare.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/MainActivity.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest$permission.class \
 /Users/javierAle/Dropbox/workspace/NetBeans/MapsExample/bin/classes/com/javier/maps/Manifest.class \
